@@ -1,0 +1,86 @@
+package Final;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+import org.omg.CORBA.PUBLIC_MEMBER;
+
+// Card shuffling and dealing.
+
+public class DeckOfCardsTest
+{
+	// execute application
+	public static void main( String[] args )
+	{
+		DeckOfCards myDeckOfCards = new DeckOfCards();
+		myDeckOfCards.shuffle(); // place Cards in random order
+		//print all 52 Cards in the order in which they are dealt
+		
+		for ( int i = 1; i <= 52; i++ )
+		{
+			
+			// deal and display a Card
+			System.out.printf( "%-20s", myDeckOfCards.dealCard() );
+			
+			if (i% 4 == 0 ) // output a newline after every fourth card
+				System.out.println();
+		} // end for
+		
+		
+		
+		Hand yourHand= new Hand("Your Hand");
+		Hand computerhand= new Hand("Computer's Hand");
+		
+		filltheHandsWithCardsFromDeck(yourHand,computerhand,myDeckOfCards);
+		compare(yourHand,computerhand);
+	
+		}
+	
+	
+	
+	
+	public static void compare(Hand yourHand, Hand computerhand){
+		int yourhandpowr=yourHand.checkHandpower();
+		int computerhandpower=computerhand.checkHandpower();
+		String[] arrpower={"Nothing","one pair","two pair","Three of kind ","Four of Kind","flush","Straight","fullhouse"};
+		
+		yourHand.printhand();
+		System.out.println("---");
+		System.out.println(arrpower[yourhandpowr]);
+		
+		computerhand.printhand();
+		System.out.println("---");
+		System.out.println(arrpower[computerhandpower]);
+		
+		
+		if (yourhandpowr>computerhandpower){
+			System.out.println("-------------------");
+			System.out.println("You win !");
+		}
+		else if (computerhandpower>yourhandpowr){
+			System.out.println("-------------------");
+			System.out.println("Computer wins");
+		}
+		else if (computerhandpower==yourhandpowr){
+			System.out.println("-------------------");
+			System.out.println("Even");
+		}
+		
+	}
+	public static  void filltheHandsWithCardsFromDeck(Hand hand1,Hand hand2,DeckOfCards Deck){
+		for (int i =0; i < hand1.getCards().length; i++) {
+			hand1.getCards()[i]=Deck.getdeckarray()[i];
+		}
+		int j=5;
+		for (int i =0; i < hand2.getCards().length; i++) {
+			
+			hand2.getCards()[i]=Deck.getdeckarray()[j];
+			j++;
+		}
+		
+	}
+
+	
+			
+
+} // end class DeckOfCardsTest
